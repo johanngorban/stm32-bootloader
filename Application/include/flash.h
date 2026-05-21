@@ -13,4 +13,4 @@ typedef enum {
 
 flash_status_t flash_write(uint32_t *addr, uint32_t *data, uint32_t length);
 
-flash_status_t flash_erase(uint8_t page_start, uint8_t count);
+flash_status_t flash_erase(uint8_t *addr, uint32_t length);

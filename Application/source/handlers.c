@@ -26,17 +26,14 @@ void handle_flash(const bcp_request_t *request, bcp_response_t *response) {
         return;
     }
 
-    uint8_t pages_per_slot = FIRMWARE_SLOT_SIZE / FLASH_PAGE_SIZE;
-    uint8_t page_start = (BOOTLOADER_SIZE / FLASH_PAGE_SIZE) + (slot - 1) * pages_per_slot;
+    uint8_t *slot_addr = FIRMWARE_SLOT_1_START + FIRMWARE_SLOT_SIZE * (slot - 1);
 
-    if (flash_erase(page_start, pages_per_slot) != FLASH_OK) {
+    if (flash_erase(slot_addr, FIRMWARE_SLOT_SIZE) != FLASH_OK) {
         response->status = BCP_ERROR_INTERNAL_ERROR;
         return;
     }
 
-    uint8_t *slot_addr = (uint8_t *)(FIRMWARE_SLOT_1_START + (slot - 1) * FIRMWARE_SLOT_SIZE);
     uint32_t received_length = 0;
-
     if (fwp_receive(slot_addr, &received_length) != FWP_OK) {
         response->status = BCP_ERROR_INTERNAL_ERROR;
         return;

@@ -13,7 +13,7 @@
 /**
  * Memory map
  */
-#define BOOTLOADER_START ((volatile uint8_t *) 0x08000000)
+#define BOOTLOADER_START ((uint8_t *) 0x08000000)
 #define BOOTLOADER_SIZE  (20 * 1024) // 20Kb
 
 #define FLASH_SIZE ((*(volatile uint16_t *) 0x1FFFF7E0) * 1024)
