@@ -206,7 +206,7 @@ clean:
 -include $(wildcard $(BUILD_DIR)/*.d)
 
 # clang linter
-CLANG_FORMAT := clang-format
+CLANG_FORMAT := $(shell which clang-format-20 2>/dev/null || which clang-format)
 FORMAT_DIRS := -not -path './third_party/*' -not -path './build/*'
 
 fmt:
