@@ -1,12 +1,11 @@
 #include "app.h"
 #include "bcp.h"
 #include "bcp_io.h"
-#include "router.h"
 #include "fwpio.h"
+#include "router.h"
 #include <stdbool.h>
 
 extern UART_HandleTypeDef huart1;
-
 
 void app_init() {
     bcp_uart_init(&huart1);
@@ -19,7 +18,7 @@ void app_run() {
 
     bool activity_detected = false;
 
-    while(1) {
+    while (1) {
         // if (!activity_detected && waited >= MAX_WAIT_TIME_MS) {
         //     jump_to_app();
         // }

@@ -1,10 +1,10 @@
 #include "fwpio.h"
-#include "fwp.h"
+#include "config.h"
 #include "crc.h"
 #include "flash.h"
-#include "config.h"
-#include <string.h>
+#include "fwp.h"
 #include <stdbool.h>
+#include <string.h>
 
 static UART_HandleTypeDef *uart = NULL;
 
@@ -34,8 +34,8 @@ static fwp_status_t recv_packet(uint8_t *type, uint16_t *seq, uint8_t *payload, 
         return FWP_ERR_TIMEOUT;
     }
 
-    *type   = header[0];
-    *seq    = (uint16_t) header[1] | ((uint16_t) header[2] << 8);
+    *type = header[0];
+    *seq = (uint16_t) header[1] | ((uint16_t) header[2] << 8);
     *length = (uint16_t) header[3] | ((uint16_t) header[4] << 8);
 
     if (*length > FWP_DATA_SIZE) {
@@ -100,10 +100,7 @@ fwp_status_t fwp_receive(uint8_t *dest, uint32_t *received_length) {
                 send_byte(FWP_NAK);
                 continue;
             }
-            total_size = (uint32_t) payload[0]
-                       | ((uint32_t) payload[1] << 8)
-                       | ((uint32_t) payload[2] << 16)
-                       | ((uint32_t) payload[3] << 24);
+            total_size = (uint32_t) payload[0] | ((uint32_t) payload[1] << 8) | ((uint32_t) payload[2] << 16) | ((uint32_t) payload[3] << 24);
             if (total_size == 0 || total_size > FIRMWARE_SLOT_SIZE) {
                 send_byte(FWP_NAK);
                 return FWP_ERR_PROTOCOL;
@@ -111,8 +108,7 @@ fwp_status_t fwp_receive(uint8_t *dest, uint32_t *received_length) {
             started = true;
             send_byte(FWP_ACK);
             expected_seq++;
-        }
-        else if (type == FWP_TYPE_DATA) {
+        } else if (type == FWP_TYPE_DATA) {
             if (!started || offset + length > total_size) {
                 send_byte(FWP_NAK);
                 continue;
@@ -131,8 +127,7 @@ fwp_status_t fwp_receive(uint8_t *dest, uint32_t *received_length) {
             offset += length;
             send_byte(FWP_ACK);
             expected_seq++;
-        }
-        else if (type == FWP_TYPE_END) {
+        } else if (type == FWP_TYPE_END) {
             if (!started || offset != total_size) {
                 send_byte(FWP_NAK);
                 return FWP_ERR_PROTOCOL;
@@ -140,8 +135,7 @@ fwp_status_t fwp_receive(uint8_t *dest, uint32_t *received_length) {
             send_byte(FWP_ACK);
             *received_length = offset;
             return FWP_OK;
-        }
-        else {
+        } else {
             send_byte(FWP_NAK);
         }
     }

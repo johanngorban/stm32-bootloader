@@ -1,6 +1,6 @@
 #include "jump.h"
-#include "image.h"
 #include "config.h"
+#include "image.h"
 #include "stm32f1xx.h"
 #include <stddef.h>
 

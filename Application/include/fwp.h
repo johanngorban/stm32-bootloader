@@ -2,18 +2,18 @@
 
 #include <stdint.h>
 
-#define FWP_SOF             (0xAAu)
+#define FWP_SOF (0xAAu)
 
-#define FWP_TYPE_START      (0x01u)
-#define FWP_TYPE_DATA       (0x02u)
-#define FWP_TYPE_END        (0x03u)
+#define FWP_TYPE_START (0x01u)
+#define FWP_TYPE_DATA  (0x02u)
+#define FWP_TYPE_END   (0x03u)
 
-#define FWP_ACK             (0x06u)
-#define FWP_NAK             (0x15u)
+#define FWP_ACK (0x06u)
+#define FWP_NAK (0x15u)
 
-#define FWP_DATA_SIZE       (256u)
-#define FWP_HEADER_SIZE     (5u)
-#define FWP_RX_TIMEOUT_MS   (5000u)
+#define FWP_DATA_SIZE     (256u)
+#define FWP_HEADER_SIZE   (5u)
+#define FWP_RX_TIMEOUT_MS (5000u)
 
 typedef enum {
     FWP_OK = 0,

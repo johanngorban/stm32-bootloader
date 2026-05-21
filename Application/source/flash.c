@@ -1,17 +1,16 @@
 #include "flash.h"
-#include "stm32f1xx_hal.h"
 #include "config.h"
+#include "stm32f1xx_hal.h"
 
 #define MCU_WORD_SIZE (4u)
-#define FLASH_END (FLASH_BASE + FLASH_SIZE - 1)
+#define FLASH_END     (FLASH_BASE + FLASH_SIZE - 1)
 
 static flash_status_t __flash_write_aligned(uint32_t *addr, uint32_t *data, uint32_t length) {
     for (uint32_t i = 0; i < length; i++) {
         if (HAL_FLASH_Program(
                 FLASH_TYPEPROGRAM_WORD,
                 (uint32_t) (addr + i),
-                data[i]
-            ) != HAL_OK) {
+                data[i]) != HAL_OK) {
             return FLASH_ERROR;
         }
     }
@@ -31,7 +30,7 @@ flash_status_t flash_write(uint32_t *addr, uint32_t *data, uint32_t length) {
     __disable_irq();
     HAL_FLASH_Unlock();
 
-    flash_status_t status = __flash_write_aligned(addr, data, length);    
+    flash_status_t status = __flash_write_aligned(addr, data, length);
 
     HAL_FLASH_Lock();
     __enable_irq();

@@ -1,9 +1,9 @@
 #include "handlers.h"
+#include "bcp_io.h"
 #include "config.h"
+#include "crc.h"
 #include "flash.h"
 #include "fwpio.h"
-#include "crc.h"
-#include "bcp_io.h"
 #include "image.h"
 #include "jump.h"
 #include <string.h>
@@ -34,7 +34,7 @@ void handle_flash(const bcp_request_t *request, bcp_response_t *response) {
         return;
     }
 
-    uint8_t *slot_addr = (uint8_t *)(FIRMWARE_SLOT_1_START + (slot - 1) * FIRMWARE_SLOT_SIZE);
+    uint8_t *slot_addr = (uint8_t *) (FIRMWARE_SLOT_1_START + (slot - 1) * FIRMWARE_SLOT_SIZE);
     uint32_t received_length = 0;
 
     if (fwp_receive(slot_addr, &received_length) != FWP_OK) {

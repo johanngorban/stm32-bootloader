@@ -2,9 +2,9 @@
 
 #include <stdint.h>
 
-#define BCP_MAX_DATA_LENGTH        (255u)
-#define BCP_REQUEST_HEADER_SIZE    (2u)
-#define BCP_RESPONSE_HEADER_SIZE   (3u)
+#define BCP_MAX_DATA_LENGTH      (255u)
+#define BCP_REQUEST_HEADER_SIZE  (2u)
+#define BCP_RESPONSE_HEADER_SIZE (3u)
 
 #define BCP_SOF_BYTE (0xAAu)
 
