@@ -2,8 +2,8 @@
 #include "config.h"
 #include "stm32f1xx_hal.h"
 
-#define MCU_WORD_SIZE (4u)
-#define FLASH_END (FLASH_BASE + FLASH_SIZE - 1)
+#define MCU_WORD_SIZE   (4u)
+#define FLASH_END       (FLASH_BASE + FLASH_SIZE - 1)
 #define FLASH_WORD_SIZE (1024u)
 
 static inline flash_status_t __flash_write_aligned(uint32_t *addr, uint32_t *data, uint32_t length) {
