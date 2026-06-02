@@ -34,8 +34,6 @@ int8_t bcp_send_response(const bcp_response_t *response) {
     return 0;
 }
 
-// TODO: move CRC here.
-// Think about how to process packet if CRCs are different
 int8_t bcp_recv_request(bcp_request_t *request) {
     uint8_t sof_byte = 0;
     do {
