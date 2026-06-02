@@ -1,10 +1,10 @@
 #include "app.h"
 #include "bcp.h"
 #include "bcp_io.h"
-#include "fwpio.h"
-#include "router.h"
-#include "jump.h"
 #include "config.h"
+#include "fwpio.h"
+#include "jump.h"
+#include "router.h"
 #include "stm32f1xx_hal.h"
 #include <stdbool.h>
 
@@ -26,10 +26,10 @@ void app_run() {
     while (1) {
         if (!activity_detected && waited >= MAX_WAIT_TIME_MS) {
             // Try to jump into slot 1
-            jump_to_slot(1);
+            jump_to_slot_with_verification(1);
 
             // Try to jump into slot 2
-            jump_to_slot(2);
+            jump_to_slot_with_verification(2);
 
             // If we did not jump, all images are invalid
             activity_detected = true;

@@ -46,6 +46,9 @@ void handle_run(const bcp_request_t *request, bcp_response_t *response) {
         response->status = BCP_ERROR_INVALID_SLOT;
         return;
     }
+
+    response->post_callback = jump_to_slot;
+    response->post_callback_arg = slot;
 }
 
 void handle_verify(const bcp_request_t *request, bcp_response_t *response) {
