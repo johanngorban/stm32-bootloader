@@ -6,7 +6,7 @@
 
 typedef void (*jump_to_app_t)();
 
-void jump_to_slot(uint8_t slot) {
+int8_t jump_to_slot(uint8_t slot) {
     uint8_t *slot_addr = NULL;
 
     if (slot == 1) {
@@ -14,7 +14,12 @@ void jump_to_slot(uint8_t slot) {
     } else if (slot == 2) {
         slot_addr = FIRMWARE_SLOT_2_START;
     } else {
-        return;
+        return -1;
+    }
+
+    // Do not start, if image is invalid
+    if (image_verify(slot) != 0) {
+        return -1;
     }
 
     uint8_t *app_addr = slot_addr + IMAGE_METADATA_SIZE;
@@ -28,4 +33,6 @@ void jump_to_slot(uint8_t slot) {
 
     __set_MSP(app_msp);
     jump_to_app();
+
+    return -1;
 }

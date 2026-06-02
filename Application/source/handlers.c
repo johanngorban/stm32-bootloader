@@ -46,46 +46,18 @@ void handle_run(const bcp_request_t *request, bcp_response_t *response) {
         response->status = BCP_ERROR_INVALID_SLOT;
         return;
     }
-
-    response->post_callback = jump_to_slot;
-    response->post_callback_arg = slot;
 }
 
 void handle_verify(const bcp_request_t *request, bcp_response_t *response) {
     uint8_t slot = request->data[0];
-    if ((slot < 1) || (slot > 2)) {
-        response->status = BCP_ERROR_INVALID_SLOT;
+    if (image_verify(slot) != 0) {
+        response->data[0] = 0;
+        response->length = 1;
         return;
     }
 
     const uint8_t *image_addr = FIRMWARE_SLOT_1_START + FIRMWARE_SLOT_SIZE * (slot - 1);
     const image_metadata_t *metadata = (const image_metadata_t *) image_addr;
-
-    if (metadata->magic != IMAGE_MAGIC_NUMBER) {
-        response->data[0] = 0;
-        response->length = 1;
-        return;
-    }
-
-    if (metadata->size == 0) {
-        response->data[0] = 0;
-        response->length = 1;
-        return;
-    }
-
-    if ((metadata->size + IMAGE_METADATA_SIZE) > FIRMWARE_SLOT_SIZE) {
-        response->data[0] = 0;
-        response->length = 1;
-        return;
-    }
-
-    const uint8_t *image_body_addr = image_addr + IMAGE_METADATA_SIZE;
-    uint32_t image_body_crc = crc32_iso_hdlc(image_body_addr, metadata->size);
-    if (image_body_crc != metadata->crc) {
-        response->data[0] = 0;
-        response->length = 1;
-        return;
-    }
 
     // valid marker
     response->data[0] = 1;
