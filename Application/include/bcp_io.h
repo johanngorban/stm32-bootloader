@@ -5,7 +5,7 @@
 
 #define BCP_RECV_OK      0
 #define BCP_RECV_TIMEOUT 1
-#define BCP_RECV_ERROR  -1
+#define BCP_RECV_ERROR   -1
 
 void bcp_uart_init(UART_HandleTypeDef *huart);
 

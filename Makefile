@@ -205,4 +205,14 @@ clean:
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
 
+# clang linter
+CLANG_FORMAT := $(shell which clang-format-20 2>/dev/null || which clang-format)
+FORMAT_DIRS := -not -path './third_party/*' -not -path './build/*'
+
+fmt:
+	find . $(FORMAT_DIRS) \( -name '*.c' -o -name '*.h' \) | xargs $(CLANG_FORMAT) -i
+
+fmt-check:
+	find . $(FORMAT_DIRS) \( -name '*.c' -o -name '*.h' \) | xargs $(CLANG_FORMAT) --dry-run --Werror
+
 # *** EOF ***

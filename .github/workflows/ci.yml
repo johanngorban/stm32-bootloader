@@ -1,0 +1,22 @@
+name: clang-format check
+
+on: [push]
+
+jobs:
+  format:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install clang-format v20
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 20 all
+          sudo apt-get install -y clang-format-20
+
+      - name: Install clang-format v20
+        run: sudo apt-get install -y clang-format-20
+
+      - name: Check formatting
+        run: make fmt-check

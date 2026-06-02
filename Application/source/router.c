@@ -1,6 +1,6 @@
 #include "router.h"
-#include "handlers.h"
 #include "bcp_io.h"
+#include "handlers.h"
 #include <stddef.h>
 
 static const router_entry_t router[] = {

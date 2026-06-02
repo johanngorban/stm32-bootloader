@@ -1,9 +1,9 @@
 #include "handlers.h"
+#include "bcp_io.h"
 #include "config.h"
+#include "crc.h"
 #include "flash.h"
 #include "fwpio.h"
-#include "crc.h"
-#include "bcp_io.h"
 #include "image.h"
 #include "jump.h"
 #include <string.h>

@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-#define BCP_RECV_MAX_ATTEMPTS   (5)
+#define BCP_RECV_MAX_ATTEMPTS (5)
 
-static  UART_HandleTypeDef *uart = NULL;
+static UART_HandleTypeDef *uart = NULL;
 
 void bcp_uart_init(UART_HandleTypeDef *huart) {
     if (uart != NULL) {
