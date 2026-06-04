@@ -39,18 +39,18 @@ C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_pwr.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_flash_ex.c \
-Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_gpio_ex.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_uart.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_rcc.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_rcc_ex.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_gpio.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_dma.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_cortex.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_pwr.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_flash.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_flash_ex.c \
+libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_exti.c \
 Core/Src/system_stm32f1xx.c \
 Core/Src/sysmem.c \
 Core/Src/syscalls.c \
@@ -127,10 +127,10 @@ AS_INCLUDES =
 # C includes
 C_INCLUDES =  \
 -ICore/Inc \
--IDrivers/STM32F1xx_HAL_Driver/Inc \
--IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
--IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
--IDrivers/CMSIS/Include \
+-Ilibs/stm32f1xx_hal_driver/Inc \
+-Ilibs/stm32f1xx_hal_driver/Inc/Legacy \
+-Ilibs/cmsis_device_f1/Include \
+-Ilibs/cmsis_core/CMSIS/Core/Include \
 -IApplication \
 -IApplication/include \
 
