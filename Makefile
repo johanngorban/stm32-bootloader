@@ -64,7 +64,7 @@ Application/source/flash.c \
 Application/source/fwpio.c \
 Application/source/image.c \
 Application/source/jump.c \
-
+port/stm32f1/port_flash.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -117,7 +117,8 @@ AS_DEFS =
 # C defines
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
--DSTM32F103xB
+-DSTM32F103xB \
+-DSTM32F1
 
 
 # AS includes

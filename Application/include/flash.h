@@ -1,15 +1,9 @@
 #pragma once
 
-#include "stm32f1xx_hal.h"
+#include "flash_port.h"
 #include <stdint.h>
 
 #define FLASH_PAGE_ADDR(page) (FLASH_BASE + (page) * FLASH_PAGE_SIZE)
-
-typedef enum {
-    FLASH_OK = 0,
-    FLASH_ERROR = 1,
-    FLASH_ALIGNMENT_ERROR = 2,
-} flash_status_t;
 
 flash_status_t flash_write(uint32_t *addr, uint32_t *data, uint32_t length);
 

@@ -1,7 +1,7 @@
 #include "jump.h"
 #include "config.h"
+#include "core_mcu.h"
 #include "image.h"
-#include "stm32f1xx.h"
 #include <stddef.h>
 
 typedef void (*jump_to_app_t)();
