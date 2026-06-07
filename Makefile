@@ -13,8 +13,7 @@
 ######################################
 # target
 ######################################
-TARGET = stm32f103-bootloader
-
+TARGET = stm32-bootloader
 
 ######################################
 # building variables
@@ -31,10 +30,6 @@ OPT = -O0
 # Build path
 BUILD_DIR = build
 
-######################################
-# source
-######################################
-# C sources
 C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/stm32f1xx_it.c \
@@ -54,25 +49,15 @@ libs/stm32f1xx_hal_driver/Src/stm32f1xx_hal_exti.c \
 Core/Src/system_stm32f1xx.c \
 Core/Src/sysmem.c \
 Core/Src/syscalls.c \
-Application/source/app.c \
-Application/source/bcp.c \
-Application/source/handlers.c \
-Application/source/router.c \
-Application/source/crc.c \
-Application/source/bcp_io.c \
-Application/source/flash.c \
-Application/source/fwpio.c \
-Application/source/image.c \
-Application/source/jump.c \
 port/stm32f1/port_flash.c
+
+C_SOURCES += $(wildcard Application/source/*.c)
+
+C_SOURCES += $(wildcard port/stm32f103/*.c)
 
 # ASM sources
 ASM_SOURCES =  \
-startup_stm32f103xb.s
-
-# ASMM sources
-ASMM_SOURCES =
-
+./startup/stm32f103xb.s
 
 
 #######################################
@@ -152,7 +137,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32F103XX_FLASH.ld
+LDSCRIPT = ld/stm32f103xx.ld
 
 # libraries
 LIBS = -lc -lm -lnosys
