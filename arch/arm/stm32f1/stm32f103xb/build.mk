@@ -1,0 +1,2 @@
+C_DEFS += \
+	-DSTM32F103xB \
