@@ -1,5 +1,7 @@
 #pragma once
 
+#include "memory_map.h"
+
 #define MAX_WAIT_TIME_MS (10000)
 
 /**

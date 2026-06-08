@@ -1,6 +1,9 @@
 #pragma once
 
-#define FLASH_SIZE ((*(volatile uint16_t *) 0x1FFFF7E0) * 1024)
+#include "stm32f1_common.h"
+
+#define FLASH_SIZE (128 * 1024)
+#define FLASH_END (FLASH_BASE + FLASH_SIZE - 1)
 
 #define FIRMWARE_SLOT_SIZE    (48 * 1024) // 48KB
 #define FIRMWARE_SLOT_1_START (BOOTLOADER_START + BOOTLOADER_SIZE)

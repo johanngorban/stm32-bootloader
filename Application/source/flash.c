@@ -1,8 +1,6 @@
 #include "flash.h"
 #include "config.h"
-#include "core_mcu.h"
-
-#define FLASH_END (FLASH_BASE + FLASH_SIZE - 1)
+#include "memory_map.h"
 
 flash_status_t flash_write(uint32_t *addr, uint32_t *data, uint32_t length) {
     if ((addr + length - 1) > (uint32_t *) FLASH_END) {
