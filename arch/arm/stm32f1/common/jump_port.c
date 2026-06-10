@@ -1,5 +1,5 @@
 #include "jump_port.h"
-#include "stm32f1_common.h"
+#include "mcu.h"
 
 void jump_to_addr(uint8_t *addr) {
     uint32_t msp = *(volatile uint32_t *) addr;

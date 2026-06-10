@@ -2,7 +2,6 @@
 
 #include <stdint.h>
 #include "fwp.h"
-#include "stm32f1xx_hal.h"
 
 #define FWP_SOF (0xAAu)
 

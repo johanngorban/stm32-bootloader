@@ -4,10 +4,8 @@
 #include "config.h"
 #include "jump.h"
 #include "router.h"
-#include "stm32f1xx_hal.h"
+#include "time.h"
 #include <stdbool.h>
-
-extern UART_HandleTypeDef huart1;
 
 void app_init() {}
 
@@ -17,7 +15,7 @@ void app_run() {
 
     bool activity_detected = false;
 
-    uint32_t start_time = HAL_GetTick();
+    uint32_t start_time = get_tick();
     uint32_t waited = 0;
     while (1) {
         if (!activity_detected && waited >= MAX_WAIT_TIME_MS) {
@@ -39,6 +37,6 @@ void app_run() {
             bcp_request_init(&request);
         }
 
-        waited = HAL_GetTick() - start_time;
+        waited = get_tick() - start_time;
     }
 }

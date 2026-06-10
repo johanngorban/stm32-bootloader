@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stm32f1_common.h"
+#include "mcu.h"
 
 #define FLASH_SIZE (128 * 1024)
 #define FLASH_END (FLASH_BASE + FLASH_SIZE - 1)

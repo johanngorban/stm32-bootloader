@@ -1,5 +1,5 @@
 #include "uart.h"
-#include "stm32f1_common.h"
+#include "mcu.h"
 #include "stm32f1xx_hal.h"
 
 static UART_HandleTypeDef huart1;

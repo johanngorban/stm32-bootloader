@@ -1,5 +1,5 @@
 #include "flash_port.h"
-#include "stm32f1_common.h"
+#include "mcu.h"
 #include "stm32f1xx_hal.h"
 #include <stdint.h>
 
