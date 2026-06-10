@@ -1,8 +1,7 @@
 #include "app.h"
 #include "bcp.h"
-#include "bcp_io.h"
+#include "fwp.h"
 #include "config.h"
-#include "fwpio.h"
 #include "jump.h"
 #include "router.h"
 #include "stm32f1xx_hal.h"
@@ -10,10 +9,7 @@
 
 extern UART_HandleTypeDef huart1;
 
-void app_init() {
-    bcp_uart_init(&huart1);
-    fwp_init(&huart1);
-}
+void app_init() {}
 
 void app_run() {
     bcp_request_t request;

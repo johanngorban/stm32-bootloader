@@ -8,6 +8,10 @@
 
 #define BCP_SOF_BYTE (0xAAu)
 
+#define BCP_RECV_OK      0
+#define BCP_RECV_TIMEOUT 1
+#define BCP_RECV_ERROR   -1
+
 typedef enum {
     BCP_FLASH = 0x01,
     BCP_VERIFY = 0x02,
@@ -56,3 +60,7 @@ uint8_t bcp_response_to_bytes(const bcp_response_t *response, uint8_t *data);
 uint16_t bcp_request_calculate_crc16(const bcp_request_t *request);
 
 uint16_t bcp_response_calculate_crc16(const bcp_response_t *response);
+
+int8_t bcp_send_response(const bcp_response_t *response);
+
+int8_t bcp_recv_request(bcp_request_t *request);

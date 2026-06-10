@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stdint.h>
+#include "fwp.h"
+#include "stm32f1xx_hal.h"
 
 #define FWP_SOF (0xAAu)
 
@@ -25,3 +27,5 @@ typedef enum {
     FWP_ERR_MAX_RETRIES,
     FWP_ERR_FLASH,
 } fwp_status_t;
+
+fwp_status_t fwp_receive(uint8_t *dest, uint32_t *received_length);

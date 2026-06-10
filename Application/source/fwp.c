@@ -1,4 +1,5 @@
-#include "fwpio.h"
+#include "fwp.h"
+#include "uart.h"
 #include "config.h"
 #include "crc.h"
 #include "flash.h"
@@ -6,31 +7,26 @@
 #include <stdbool.h>
 #include <string.h>
 
-static UART_HandleTypeDef *uart = NULL;
 
-void fwp_init(UART_HandleTypeDef *huart) {
-    uart = huart;
+static inline uart_status_t recv_bytes(uint8_t *buf, uint16_t length) {
+    return uart_recv(buf, length, FWP_RX_TIMEOUT_MS);
 }
 
-static HAL_StatusTypeDef recv_bytes(uint8_t *buf, uint16_t length) {
-    return HAL_UART_Receive(uart, buf, length, FWP_RX_TIMEOUT_MS);
-}
-
-static void send_byte(uint8_t b) {
-    HAL_UART_Transmit(uart, &b, 1, HAL_MAX_DELAY);
+static inline void send_byte(uint8_t b) {
+    uart_send(&b, 1, UART_MAX_DELAY);
 }
 
 static fwp_status_t recv_packet(uint8_t *type, uint16_t *seq, uint8_t *payload, uint16_t *length) {
     uint8_t b = 0;
 
     do {
-        if (recv_bytes(&b, 1) != HAL_OK) {
+        if (recv_bytes(&b, 1) != UART_OK) {
             return FWP_ERR_TIMEOUT;
         }
     } while (b != FWP_SOF);
 
     uint8_t header[FWP_HEADER_SIZE];
-    if (recv_bytes(header, FWP_HEADER_SIZE) != HAL_OK) {
+    if (recv_bytes(header, FWP_HEADER_SIZE) != UART_OK) {
         return FWP_ERR_TIMEOUT;
     }
 
@@ -43,13 +39,13 @@ static fwp_status_t recv_packet(uint8_t *type, uint16_t *seq, uint8_t *payload, 
     }
 
     if (*length > 0) {
-        if (recv_bytes(payload, *length) != HAL_OK) {
+        if (recv_bytes(payload, *length) != UART_OK) {
             return FWP_ERR_TIMEOUT;
         }
     }
 
     uint8_t crc_bytes[2];
-    if (recv_bytes(crc_bytes, 2) != HAL_OK) {
+    if (recv_bytes(crc_bytes, 2) != UART_OK) {
         return FWP_ERR_TIMEOUT;
     }
     uint16_t crc_recv = (uint16_t) crc_bytes[0] | ((uint16_t) crc_bytes[1] << 8);
