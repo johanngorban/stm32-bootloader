@@ -3,16 +3,16 @@
 #include "stm32f1xx_hal.h"
 #include <stdint.h>
 
-#define FLASH_WORD_SIZE (1024u)
+#define FLASH_PAGE_SIZE (1024u)
 
 flash_status_t ported_flash_erase_aligned(uint8_t *addr, uint32_t length) {
     // Check start address to be page aligned
-    if (((uint32_t) addr % FLASH_WORD_SIZE) > 0) {
+    if (((uint32_t) addr % FLASH_PAGE_SIZE) > 0) {
         return FLASH_ALIGNMENT_ERROR;
     }
 
     // Check size to erase to be page aligned
-    if ((length % FLASH_WORD_SIZE) > 0) {
+    if ((length % FLASH_PAGE_SIZE) > 0) {
         return FLASH_ALIGNMENT_ERROR;
     }
 
