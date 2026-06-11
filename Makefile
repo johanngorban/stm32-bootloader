@@ -69,7 +69,7 @@ C_FLAGS += $(MCU_FLAGS) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ff
 LD_FLAGS = $(MCU_FLAGS) -specs=nano.specs -T$(LD_SCRIPT) $(LIBDIR) $(LIBS_FLAGS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # Main rule
-all: ${BUILD_DIR} $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
+all: ${BUILD_DIR} $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin clean-objects
 
 # Objects specification
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
@@ -113,4 +113,7 @@ fmt-check:
 
 # Cleanup
 clean:
-	-rm -fR $(BUILD_DIR)
+	rm -fR $(BUILD_DIR)
+
+clean-objects:
+	rm -rf $(BUILD_DIR)/*.o $(BUILD_DIR)/*.lst
