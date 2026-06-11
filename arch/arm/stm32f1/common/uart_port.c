@@ -1,8 +1,5 @@
 #include "uart.h"
 #include "mcu.h"
-#include "stm32f1xx_hal.h"
-
-static UART_HandleTypeDef huart1;
 
 // TODO: implement
 void uart_init(uint32_t baud) {
