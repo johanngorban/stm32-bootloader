@@ -3,7 +3,7 @@
 #include <stdint.h>
 
 // TODO: implement
-static inline uint32_t irq_save(void) {
+static inline uint32_t irq_save() {
     return 0;
 }
 
