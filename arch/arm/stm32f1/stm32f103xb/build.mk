@@ -1,2 +1,4 @@
 C_DEFS += \
 	-DSTM32F103xB \
+
+C_INCLUDE += -I${BOARD_DIR}

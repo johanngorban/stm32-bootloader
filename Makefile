@@ -14,18 +14,6 @@ SHARED_LIBS_DIR := libs
 # Optimization
 OPT ?= -O0
 
-C_INCLUDES += -IApplication/include \
-			  -ICore/Inc \
-              -I$(ARCH_DIR)/include \
-              -I$(MACHINE_DIR)/include \
-              -I$(BOARD_DIR)
-
-C_SOURCES += \
-	$(wildcard Application/source/*.c) \
-	$(wildcard Core/Src/*.c) \
-	$(wildcard $(BOARD_DIR)/*.c) \
-	$(wildcard ${MACHINE_DIR}/*.c)
-
 ASM_SOURCES := $(wildcard $(BOARD_DIR)/*.s)
 LD_SCRIPT := $(wildcard $(BOARD_DIR)/*.ld)
 
@@ -34,6 +22,9 @@ DEBUG ?= false
 ifeq (${DEBUG}, true)
 	C_FLAGS += -g -O0 -DDEBUG
 endif
+
+# Add bootloader kernel code
+include bootloader/build.mk
 
 # Add arch specific makefile
 include ${ARCH_DIR}/build.mk
@@ -63,7 +54,7 @@ LIBS_FLAGS = -lc -lm -lnosys
 LIBDIR =
 
 # Add C flags
-C_FLAGS += $(MCU_FLAGS) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+C_FLAGS += $(MCU_FLAGS) $(C_DEFS) $(C_INCLUDE) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 # Linker common flags
 LD_FLAGS = $(MCU_FLAGS) -specs=nano.specs -T$(LD_SCRIPT) $(LIBDIR) $(LIBS_FLAGS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
@@ -72,8 +63,8 @@ LD_FLAGS = $(MCU_FLAGS) -specs=nano.specs -T$(LD_SCRIPT) $(LIBDIR) $(LIBS_FLAGS)
 all: ${BUILD_DIR} $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin clean-objects
 
 # Objects specification
-OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
-vpath %.c $(sort $(dir $(C_SOURCES)))
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCE:.c=.o)))
+vpath %.c $(sort $(dir $(C_SOURCE)))
 
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
@@ -115,5 +106,4 @@ fmt-check:
 clean:
 	rm -fR $(BUILD_DIR)
 
-clean-objects:
-	rm -rf $(BUILD_DIR)/*.o $(BUILD_DIR)/*.lst
+.PHONY: all clean clean-objects fmt fmt-check
