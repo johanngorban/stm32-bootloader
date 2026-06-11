@@ -1,4 +1,3 @@
-#include "app.h"
 #include "bcp.h"
 #include "fwp.h"
 #include "config.h"
@@ -7,9 +6,10 @@
 #include "time.h"
 #include <stdbool.h>
 
-void app_init() {}
+int main() {
+    // init the system
+    time_init();
 
-void app_run() {
     bcp_request_t request;
     bcp_request_init(&request);
 
@@ -17,6 +17,8 @@ void app_run() {
 
     uint32_t start_time = get_tick();
     uint32_t waited = 0;
+
+    // Start main loop
     while (1) {
         if (!activity_detected && waited >= MAX_WAIT_TIME_MS) {
             // Try to jump into slot 1
