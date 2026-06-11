@@ -1,5 +1,5 @@
-#include "time.h"
 #include "mcu.h"
+#include "time.h"
 
 static volatile uint32_t s_ticks = 0;
 

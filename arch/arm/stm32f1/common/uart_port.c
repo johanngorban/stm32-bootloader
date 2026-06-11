@@ -1,10 +1,10 @@
-#include "uart.h"
 #include "mcu.h"
+#include "uart.h"
 
 // TODO: implement
 void uart_init(uint32_t baud) {
     GPIOA->CRH &= ~0xFF0; // PA9
-    GPIOA->CRH |=  0x4B0; // PA10
+    GPIOA->CRH |= 0x4B0;  // PA10
 }
 
 // TODO: implement

@@ -1,7 +1,7 @@
 #include "jump.h"
-#include "jump_port.h"
 #include "config.h"
 #include "image.h"
+#include "jump_port.h"
 #include <stddef.h>
 
 void jump_to_slot(uint8_t slot) {

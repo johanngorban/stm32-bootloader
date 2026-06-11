@@ -1,12 +1,11 @@
 #include "fwp.h"
-#include "uart.h"
 #include "config.h"
 #include "crc.h"
 #include "flash.h"
 #include "fwp.h"
+#include "uart.h"
 #include <stdbool.h>
 #include <string.h>
-
 
 static inline uart_status_t recv_bytes(uint8_t *buf, uint16_t length) {
     return uart_recv(buf, length, FWP_RX_TIMEOUT_MS);

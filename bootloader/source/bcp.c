@@ -1,7 +1,6 @@
 #include "bcp.h"
 #include "crc.h"
 #include "uart.h"
-#include "crc.h"
 #include <string.h>
 
 #define BCP_RECV_MAX_ATTEMPTS (5)
