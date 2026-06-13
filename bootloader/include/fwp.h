@@ -1,6 +1,5 @@
 #pragma once
 
-#include "fwp.h"
 #include <stdint.h>
 
 #define FWP_SOF (0xAAu)

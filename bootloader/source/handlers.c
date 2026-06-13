@@ -19,6 +19,12 @@ void handle_get_version(const bcp_request_t *request, bcp_response_t *response) 
     response->length = 3;
 }
 
+static void flash_receive_fw(uint8_t slot) {
+    uint8_t *slot_addr = FIRMWARE_SLOT_1_START + FIRMWARE_SLOT_SIZE * (slot - 1);
+    uint32_t received_length = 0;
+    fwp_receive(slot_addr, &received_length);
+}
+
 void handle_flash(const bcp_request_t *request, bcp_response_t *response) {
     uint8_t slot = request->data[0];
     if ((slot < 1) || (slot > 2)) {
@@ -27,17 +33,13 @@ void handle_flash(const bcp_request_t *request, bcp_response_t *response) {
     }
 
     uint8_t *slot_addr = FIRMWARE_SLOT_1_START + FIRMWARE_SLOT_SIZE * (slot - 1);
-
     if (flash_erase(slot_addr, FIRMWARE_SLOT_SIZE) != FLASH_OK) {
         response->status = BCP_ERROR_INTERNAL_ERROR;
         return;
     }
 
-    uint32_t received_length = 0;
-    if (fwp_receive(slot_addr, &received_length) != FWP_OK) {
-        response->status = BCP_ERROR_INTERNAL_ERROR;
-        return;
-    }
+    response->post_callback = flash_receive_fw;
+    response->post_callback_arg = slot;
 }
 
 void handle_run(const bcp_request_t *request, bcp_response_t *response) {
