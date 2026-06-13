@@ -45,14 +45,26 @@ int8_t bcp_send_response(const bcp_response_t *response) {
 int8_t bcp_recv_request(bcp_request_t *request) {
     uint8_t sof_byte = 0;
     do {
-        uart_recv(&sof_byte, 1, UART_MAX_DELAY);
+        if (uart_recv(&sof_byte, 1, UART_MAX_DELAY) != UART_OK) {
+            return BCP_RECV_TIMEOUT;
+        }
     } while (sof_byte != BCP_SOF_BYTE);
 
-    uart_recv(&request->command, 1, UART_MAX_DELAY);
-    uart_recv(&request->length, 1, UART_MAX_DELAY);
-    uart_recv(request->data, request->length, UART_MAX_DELAY);
+    if (uart_recv(&request->command, 1, UART_MAX_DELAY) != UART_OK) {
+        return BCP_RECV_TIMEOUT;
+    }
+    if (uart_recv(&request->length, 1, UART_MAX_DELAY) != UART_OK) {
+        return BCP_RECV_TIMEOUT;
+    }
+    if (request->length > 0) {
+        if (uart_recv(request->data, request->length, UART_MAX_DELAY) != UART_OK) {
+            return BCP_RECV_TIMEOUT;
+        }
+    }
     uint8_t actual_crc[2];
-    uart_recv(actual_crc, 2, UART_MAX_DELAY);
+    if (uart_recv(actual_crc, 2, UART_MAX_DELAY) != UART_OK) {
+        return BCP_RECV_TIMEOUT;
+    }
 
     uint16_t expected_crc = crc16_modbus((const uint8_t *) request, request->length + BCP_REQUEST_HEADER_SIZE);
     if (expected_crc != ((uint16_t) (actual_crc[0] << 8) | (actual_crc[1]))) {

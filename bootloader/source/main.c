@@ -4,11 +4,13 @@
 #include "jump.h"
 #include "router.h"
 #include "time.h"
+#include "uart.h"
 #include <stdbool.h>
 
 int main() {
     // init the system
     time_init();
+    uart_init(115200);
 
     bcp_request_t request;
     bcp_request_init(&request);
