@@ -2,20 +2,18 @@ TARGET = stm32-bootloader
 
 ARCH ?= arm
 MACHINE ?= stm32f1
-BOARD ?= stm32f103xb
 BUILD_DIR ?= build
 
 ARCH_DIR := arch/$(ARCH)
 MACHINE_DIR := $(ARCH_DIR)/$(MACHINE)
-BOARD_DIR := $(MACHINE_DIR)/$(BOARD)
 
 SHARED_LIBS_DIR := libs
 
 # Optimization
 OPT ?= -O0
 
-ASM_SOURCES := $(wildcard $(BOARD_DIR)/*.s)
-LD_SCRIPT := $(wildcard $(BOARD_DIR)/*.ld)
+ASM_SOURCES :=
+LD_SCRIPT :=
 
 # Enable debug flags
 DEBUG ?= false

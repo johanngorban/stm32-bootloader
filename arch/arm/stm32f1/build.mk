@@ -3,6 +3,10 @@ C_DEFS += \
 
 CPU = cortex-m3
 
+BOARD ?= stm32f103xb
+
+BOARD_DIR := $(MACHINE_DIR)/$(BOARD)
+
 include ${BOARD_DIR}/build.mk
 
 HAL_SRC_DIR := \
