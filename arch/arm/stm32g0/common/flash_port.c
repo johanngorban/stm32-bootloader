@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#define FLASH_PROGRAM_WORD (8u) // 64 bytes
-#define FLASH_PAGE_SIZE (2048u) // 2Kb
+#define FLASH_PROGRAM_WORD (8u)    // 64 bytes
+#define FLASH_PAGE_SIZE    (2048u) // 2Kb
 
 flash_status_t ported_flash_erase_aligned(uint8_t *addr, uint32_t length) {
     // Check start address to be page aligned
@@ -53,8 +53,7 @@ flash_status_t ported_flash_write_aligned(uint32_t *addr, uint32_t *data, uint32
         HAL_StatusTypeDef status = HAL_FLASH_Program(
             FLASH_TYPEPROGRAM_DOUBLEWORD,
             (uint32_t) (addr + i),
-            data_word
-        );
+            data_word);
         if (status != HAL_OK) {
             HAL_FLASH_Lock();
             return FLASH_ERROR;
