@@ -1,11 +1,29 @@
-TARGET = stm32-bootloader
-
 ARCH ?= arm
-MACHINE ?= stm32f1
+BOARD =  # e.g. stm32f1
 BUILD_DIR ?= build
 
+NON_BOARD_TARGETS := clean fmt fmt-check
+
+ifeq ($(MAKECMDGOALS),)
+  NEED_BOARD := 1
+else
+  ifeq ($(filter-out $(NON_BOARD_TARGETS), $(MAKECMDGOALS)),)
+    NEED_BOARD := 0
+  else
+    NEED_BOARD := 1
+  endif
+endif
+
+ifeq ($(NEED_BOARD),1)
+  ifeq ($(strip $(BOARD)),)
+    $(error Error: BOARD is not set. Please specify your MCU, e.g. BOARD=stm32f1)
+  endif
+endif
+
+TARGET =  $(BOARD)-bootloader
+
 ARCH_DIR := arch/$(ARCH)
-MACHINE_DIR := $(ARCH_DIR)/$(MACHINE)
+BOARD_DIR := $(ARCH_DIR)/$(BOARD)
 
 SHARED_LIBS_DIR := libs
 
@@ -28,7 +46,7 @@ include bootloader/build.mk
 include ${ARCH_DIR}/build.mk
 
 # Add board specific makefiles
-include ${MACHINE_DIR}/build.mk
+include ${BOARD_DIR}/build.mk
 
 # Set up C compiler
 PREFIX = arm-none-eabi-
