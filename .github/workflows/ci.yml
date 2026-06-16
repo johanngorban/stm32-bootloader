@@ -1,4 +1,4 @@
-name: clang-format check
+name: ci
 
 on: [push]
 

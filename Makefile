@@ -2,7 +2,7 @@ ARCH ?= arm
 BOARD =  # e.g. stm32f1
 BUILD_DIR ?= build
 
-NON_BOARD_TARGETS := clean fmt fmt-check
+NON_BOARD_TARGETS := clean fmt fmt-check release
 
 ifeq ($(MAKECMDGOALS),)
   NEED_BOARD := 1
@@ -107,6 +107,27 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 ${BUILD_DIR}:
 	mkdir -p ${BUILD_DIR}
 
+
+# Release
+DEVICE_DIRS := $(patsubst %/,%,$(dir $(wildcard arch/$(ARCH)/*/build.mk)))
+
+release-target = $(if $(wildcard $(1)/*/build.mk),\
+  $(subst /,@,$(patsubst arch/$(ARCH)/%,%,$(patsubst %/,%,$(dir $(wildcard $(1)/*/build.mk))))),\
+  $(patsubst arch/$(ARCH)/%,%,$(1)))
+
+RELEASE_TARGETS := $(foreach d,$(DEVICE_DIRS),$(call release-target,$(d)))
+VERSION := $(shell grep -oiE '[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z]+)*' VERSION | head -n1)
+
+release: $(addprefix release-,$(RELEASE_TARGETS))
+
+release-%:
+	$(MAKE) BOARD=$(firstword $(subst @, ,$*)) \
+	        $(if $(word 2,$(subst @, ,$*)),DEVICE=$(word 2,$(subst @, ,$*))) \
+	        BUILD_DIR=build/$(subst @,/,$*)
+	mkdir -p build/release
+	cp build/$(subst @,/,$*)/$(firstword $(subst @, ,$*))-bootloader.bin \
+	   build/release/$(lastword $(subst @, ,$*))-bootloader-$(VERSION).bin
+
 # Clang linter
 CLANG_FORMAT := $(shell which clang-format-20 2>/dev/null || which clang-format)
 FORMAT_DIRS := -not -path './${SHARED_LIBS}/*' -not -path './build/*'
@@ -122,4 +143,4 @@ fmt-check:
 clean:
 	rm -fR $(BUILD_DIR)
 
-.PHONY: all clean clean-objects fmt fmt-check
+.PHONY: all clean clean-objects fmt fmt-check release print-version
