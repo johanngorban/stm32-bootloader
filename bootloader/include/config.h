@@ -8,7 +8,7 @@
  * Bootloader version
  */
 #define BOOTLOADER_MAJOR_VERSION (1)
-#define BOOTLOADER_MINOR_VERSION (1)
+#define BOOTLOADER_MINOR_VERSION (2)
 #define BOOTLOADER_PATCH_VERSION (0)
 #define MAX_WAIT_TIME_MS         (10000)
 
