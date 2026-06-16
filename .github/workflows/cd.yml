@@ -1,9 +1,11 @@
 name: cd
 
 on:
+  push:
+    branches: [feat/port]
   workflow_run:
     workflows: [ci]
-    branches: [main, feat/port]
+    branches: [main]
     types: [completed]
 
 jobs:
