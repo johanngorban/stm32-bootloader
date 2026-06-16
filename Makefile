@@ -128,6 +128,9 @@ release-%:
 	cp build/$(subst @,/,$*)/$(firstword $(subst @, ,$*))-bootloader.bin \
 	   build/release/$(lastword $(subst @, ,$*))-bootloader-$(VERSION).bin
 
+print-version:
+	@echo $(VERSION)
+
 # Clang linter
 CLANG_FORMAT := $(shell which clang-format-20 2>/dev/null || which clang-format)
 FORMAT_DIRS := -not -path './${SHARED_LIBS}/*' -not -path './build/*'
