@@ -2,20 +2,13 @@ name: cd
 
 on:
   workflow_run:
-    workflows: ["ci"]
-    types:
-      - completed
-permissions:
-  contents: write
-concurrency:
-  group: cd
-  cancel-in-progress: false
+    workflows: [ci]
+    branches: [main, feat/port]
+    types: [completed]
 
 jobs:
   release:
-    if: >-
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'push'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout validated commit
