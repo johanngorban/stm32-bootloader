@@ -2,7 +2,7 @@ ARCH ?= arm
 BOARD =  # e.g. stm32f1
 BUILD_DIR ?= build
 
-NON_BOARD_TARGETS := clean fmt fmt-check release
+NON_BOARD_TARGETS := clean fmt fmt-check release print-version
 
 ifeq ($(MAKECMDGOALS),)
   NEED_BOARD := 1
